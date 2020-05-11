@@ -16,14 +16,15 @@ Yarn:
 ```javascript
 import DatawizAuth from "@datawizio/auth-js";
 
-var a = new DatawizAuth({
+var datawizAuth = new DatawizAuth({
   serviceUrl: "https://oauth-test.datawiz.io",
   clientId: "clientId",
   clientSecret: "clientSecret",
   redirectUrl: "redirectUrl"
 });
 
-a.init()
+datawizAuth
+  .init()
   .then(function (res) {
     //asd
     console.log("authorized", res);
