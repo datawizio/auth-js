@@ -39,7 +39,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - run: npm install
+      - run: npm ci
 
       - name: Build package
         run: npm run prod
