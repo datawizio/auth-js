@@ -1,26 +1,40 @@
 Бібліотека для роботи з сервісом авторизації.
 [Diagram](https://drive.google.com/file/d/1K5TrTGxDMzU2TJbedERWXLXFw31aUgdv/view?usp=sharing])
 
+## Install
+
+Npm:
+
+`npm install @datawizio/auth-js`
+
+Yarn:
+
+`yarn add @datawizio/auth-js`
+
 ## Приклад
 
 ```javascript
-const config = {
+import DatawizAuth from "@datawizio/auth-js";
+
+var a = new DatawizAuth({
   serviceUrl: "https://oauth-test.datawiz.io",
-  clientId: "client_id",
-  clientSecret: "client_secret",
-  redirectUrl: "redirect_url"
-};
+  clientId: "clientId",
+  clientSecret: "clientSecret",
+  redirectUrl: "redirectUrl"
+});
 
-const authService = new DatawizAuth(config);
-
-authService
-  .init()
+a.init()
   .then(function (res) {
+    //asd
     console.log("authorized", res);
   })
   .catch(function (e) {
     console.log(e);
   });
+
+a.onTokenRefreshed = function (res) {
+  console.log(res);
+};
 ```
 
 ## Config
