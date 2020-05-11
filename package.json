@@ -1,6 +1,6 @@
 {
   "name": "@datawizio/auth-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "JavaScript library for authorization in Datawiz.io ecosystem",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
