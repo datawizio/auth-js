@@ -16,7 +16,7 @@ Yarn:
 ```javascript
 import DatawizAuth from "@datawizio/auth-js";
 
-var datawizAuth = new DatawizAuth({
+const datawizAuth = new DatawizAuth({
   serviceUrl: "https://oauth-test.datawiz.io",
   clientId: "clientId",
   clientSecret: "clientSecret",
@@ -26,7 +26,6 @@ var datawizAuth = new DatawizAuth({
 datawizAuth
   .init()
   .then(function (res) {
-    //asd
     console.log("authorized", res);
   })
   .catch(function (e) {
@@ -65,4 +64,17 @@ a.onTokenRefreshed = function (res) {
 
 ## Events
 
-TBD
+### onTokenRefreshed
+
+Після того, як токен обновиться, буде викликана ця функція. Аргумент `result` -
+об'єкт з `accessToken`.
+
+```javascript
+const datawizAuth = new DatawizAuth(config);
+
+...
+
+datawizAuth.onTokenRefreshed = function (result) {
+  console.log(res);
+};
+```
