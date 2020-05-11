@@ -54,7 +54,17 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "ts-loader"
+            loader: "ts-loader",
+            options: {
+              configFile: paths.appTsConfig,
+              "compilerOptions": {
+                "allowSyntheticDefaultImports": true,
+                "experimentalDecorators": true,
+                "declarationDir": "lib",
+                "rootDir": paths.src,
+                "outDir": paths.build
+              }
+            }
           }
         ]
       },

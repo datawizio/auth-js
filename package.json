@@ -3,9 +3,17 @@
   "version": "0.0.1",
   "description": "JavaScript library for authorization in Datawiz.io ecosystem",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
     "prod": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack --watch --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datawizio/auth-js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "oauth",

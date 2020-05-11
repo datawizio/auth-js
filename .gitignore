@@ -3,3 +3,4 @@ example/
 example2/
 lib/
 yarn-error.log
+.npmrc
