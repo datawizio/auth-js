@@ -32,7 +32,7 @@ datawizAuth
     console.log(e);
   });
 
-a.onTokenRefreshed = function (res) {
+datawizAuth.onTokenRefreshed = function (res) {
   console.log(res);
 };
 ```
@@ -53,14 +53,27 @@ a.onTokenRefreshed = function (res) {
 Для запуску бібліотеки. Результатом буде `Promise` при успіху об'єкт з
 `accessToken`
 
-`authService.init()`
+`datawizAuth.init()`
 
 ### refreshToken
 
 Метод рефрефу токена. Визиваємо коли необхідно оновити токен. Результатом буде
 `Promise` при успіху об'єкт з `accessToken`
 
-`authService.refreshToken()`
+`datawizAuth.refreshToken()`
+
+### logout
+
+Метод для логауту.
+
+`datawizAuth.logout()`
+
+```javascript
+const datawizAuth = new DatawizAuth(config);
+...
+
+datawizAuth.logout();
+```
 
 ## Events
 
@@ -71,7 +84,6 @@ a.onTokenRefreshed = function (res) {
 
 ```javascript
 const datawizAuth = new DatawizAuth(config);
-
 ...
 
 datawizAuth.onTokenRefreshed = function (result) {

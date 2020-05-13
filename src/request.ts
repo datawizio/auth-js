@@ -15,7 +15,7 @@ class Request {
     return url;
   }
 
-  async post(url: string, data: ILocationParams = {}) {
+  async post(url: string, data: ILocationParams = {}, isJson: boolean = true) {
     const formData = new URLSearchParams();
     Object.keys(data).forEach(key => {
       formData.append(key, data[key]);
@@ -32,7 +32,9 @@ class Request {
       referrerPolicy: "no-referrer",
       body: formData
     });
-    return await response.json();
+    if (isJson) return await response.json();
+
+    return response;
   }
 }
 
