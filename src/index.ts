@@ -13,7 +13,9 @@ import {
   LOCATION_CODE_PARAM,
   LOCATION_STATE_PARAM,
   SERVICE_AUTHORIZE_PATH,
-  SERVICE_TOKEN_PATH
+  SERVICE_TOKEN_PATH,
+  SERVICE_LOGOUT_PATH,
+  SERVICE_REVOKE_TOKEN_PATH
 } from "./constants";
 
 import request from "./request";
@@ -47,7 +49,7 @@ class DatawizAuth {
 
         return this.buildResult();
       } catch (e) {
-        this.redirectToLoginService();
+        this.redirectToLogin();
         throw new Error("Failed to get accessToken and refreshToken with code");
       }
     }
@@ -56,7 +58,7 @@ class DatawizAuth {
       return this.buildResult();
     }
 
-    this.redirectToLoginService();
+    this.redirectToLogin();
     return false;
   }
 
@@ -69,15 +71,21 @@ class DatawizAuth {
         this.onTokenRefreshed(result);
         return result;
       } catch (e) {
-        // this.redirectToLoginService();
+        this.redirectToLogin();
         throw new Error(
           "Failed to get accessToken and refreshToken with refreshToken"
         );
       }
     }
 
-    this.redirectToLoginService();
+    this.redirectToLogin();
     throw new Error("Not found refresfToken, send to login proccess");
+  }
+
+  async logout() {
+    const res = await this.revokeToken();
+    this.removeTokens();
+    this.redirectToLogout();
   }
 
   buildResult() {
@@ -85,6 +93,20 @@ class DatawizAuth {
       accessToken: this.tokens.accessToken,
       refreshToken: this.tokens.refreshToken
     };
+  }
+
+  async revokeToken() {
+    const token = this.tokens.accessToken;
+    const response = await request.post(
+      SERVICE_REVOKE_TOKEN_PATH,
+      {
+        token,
+        client_id: this.config.clientId,
+        client_secret: this.config.clientSecret
+      },
+      false
+    );
+    return response;
   }
 
   async updateTokensWithRefreshToken(refreshToken: TToken) {
@@ -137,7 +159,13 @@ class DatawizAuth {
     };
   }
 
-  redirectToLoginService() {
+  redirectToLogout() {
+    const url = request.buildUrl(SERVICE_LOGOUT_PATH);
+
+    location.href = url;
+  }
+
+  redirectToLogin() {
     const url = request.buildUrl(SERVICE_AUTHORIZE_PATH, {
       response_type: "code",
       state: encodeURIComponent(location.href),
@@ -145,7 +173,12 @@ class DatawizAuth {
     });
 
     location.href = url;
-    console.log("REDIRECT!!!! to ", url);
+  }
+
+  removeTokens() {
+    this.storage.removeItem(LOCAL_STORAGE_REFRESH_TOKEN);
+    this.storage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN);
+    this.tokens = {};
   }
 
   setRefreshToken(refreshToken: TToken) {
