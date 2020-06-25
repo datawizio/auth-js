@@ -5,4 +5,4 @@ export const LOCATION_STATE_PARAM = "state";
 export const SERVICE_TOKEN_PATH = "/o/token/";
 export const SERVICE_REVOKE_TOKEN_PATH = "/o/revoke-token/";
 export const SERVICE_AUTHORIZE_PATH = "/o/authorize/";
-export const SERVICE_LOGOUT_PATH = "/accounts/logout";
+export const SERVICE_LOGOUT_PATH = "/logout/";
