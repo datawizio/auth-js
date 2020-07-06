@@ -128,7 +128,8 @@ class DatawizAuth {
       code,
       grant_type: "authorization_code",
       client_id: this.config.clientId,
-      client_secret: this.config.clientSecret
+      client_secret: this.config.clientSecret,
+      redirect_uri: window.location.origin + this.config.redirectPath
     });
 
     this.handleTokensResponse(response);
