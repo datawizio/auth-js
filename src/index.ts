@@ -169,7 +169,8 @@ class DatawizAuth {
     const url = request.buildUrl(SERVICE_AUTHORIZE_PATH, {
       response_type: "code",
       state: encodeURIComponent(location.href),
-      client_id: this.config.clientId
+      client_id: this.config.clientId,
+      redirect_uri: this.config.redirectUrl
     });
 
     location.href = url;
