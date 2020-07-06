@@ -2,7 +2,7 @@ export interface IConfig {
   serviceUrl: string;
   clientId: string;
   clientSecret: string;
-  redirectUrl: string;
+  redirectPath?: string;
 }
 
 export interface ILocationParams {

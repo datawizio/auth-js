@@ -34,6 +34,9 @@ class DatawizAuth {
   constructor(config: IConfig) {
     this.config = config;
     request.baseUrl = config.serviceUrl;
+    if (!this.config.redirectPath) {
+      this.config.redirectPath = "/auth/code";
+    }
   }
 
   // Initalize authorization process
@@ -170,7 +173,7 @@ class DatawizAuth {
       response_type: "code",
       state: encodeURIComponent(location.href),
       client_id: this.config.clientId,
-      redirect_uri: this.config.redirectUrl
+      redirect_uri: location.origin + this.config.redirectPath
     });
 
     location.href = url;
