@@ -24,7 +24,7 @@ import { getUrlParams } from "./helper";
 
 class DatawizAuth {
   config: IConfig;
-  storage: Storage = localStorage;
+  storage: Storage;
   locationParams: ILocationParams = getUrlParams();
   tokens: ITokens = {
     accessToken: "",
@@ -34,6 +34,7 @@ class DatawizAuth {
   constructor(config: IConfig) {
     this.config = config;
     request.baseUrl = config.serviceUrl;
+    this.storage = config.store_type === 'sessionstorege' ? sessionStorage : localStorage;
     if (!this.config.redirectPath) {
       this.config.redirectPath = "/auth/code";
     }
