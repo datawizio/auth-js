@@ -22,5 +22,5 @@ export interface IAuth {
 export interface ITokenResponse {
   access_token?: string;
   refresh_token?: string;
-  store_type?: 'localstorage' | 'sessionstorage';
+  store_type?: "localStorage" | "sessionStorage";
 }

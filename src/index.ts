@@ -42,7 +42,7 @@ class DatawizAuth {
     }
   }
 
-  // Initalize authorization process
+  // Initialize authorization process
   async init() {
     this.initTokens();
     const code: TToken = this.getCode();
@@ -208,7 +208,7 @@ class DatawizAuth {
 
   setStorageType(storeType: string) {
     if (!storeType) return;
-    this.storage = storeType === "sessionstorage" ? sessionStorage : localStorage;
+    this.storage = storeType === "sessionStorage" ? sessionStorage : localStorage;
     this.localStorage.setItem(LOCAL_STORAGE_STORAGE_TYPE, storeType);
   }
 
@@ -230,7 +230,7 @@ class DatawizAuth {
 
   getStorageTypeFromLocalStorage(): Storage {
     const storageType = this.localStorage.getItem(LOCAL_STORAGE_STORAGE_TYPE);
-    return storageType === "sessionstorage" ? sessionStorage : localStorage;
+    return storageType === "sessionStorage" ? sessionStorage : localStorage;
   }
 
   onTokenExpired() {}
