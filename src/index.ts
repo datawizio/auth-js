@@ -10,6 +10,7 @@ import {
 import {
   LOCAL_STORAGE_ACCESS_TOKEN,
   LOCAL_STORAGE_REFRESH_TOKEN,
+  LOCAL_STORAGE_STORAGE_TYPE,
   LOCATION_CODE_PARAM,
   LOCATION_STATE_PARAM,
   SERVICE_AUTHORIZE_PATH,
@@ -24,7 +25,8 @@ import { getUrlParams } from "./helper";
 
 class DatawizAuth {
   config: IConfig;
-  storage: Storage = localStorage;
+  storage: Storage;
+  localStorage: Storage = localStorage;
   locationParams: ILocationParams = getUrlParams();
   tokens: ITokens = {
     accessToken: "",
@@ -34,12 +36,13 @@ class DatawizAuth {
   constructor(config: IConfig) {
     this.config = config;
     request.baseUrl = config.serviceUrl;
+    this.storage = this.getStorageTypeFromLocalStorage();
     if (!this.config.redirectPath) {
       this.config.redirectPath = "/auth/code";
     }
   }
 
-  // Initalize authorization process
+  // Initialize authorization process
   async init() {
     this.initTokens();
     const code: TToken = this.getCode();
@@ -142,6 +145,11 @@ class DatawizAuth {
       );
     }
 
+    // Set storage type based on the response
+    if (response.store_type) {
+      this.setStorageType(response.store_type);
+    }
+
     this.parseTokenResponse(response);
   }
 
@@ -198,6 +206,12 @@ class DatawizAuth {
     this.storage.setItem(LOCAL_STORAGE_ACCESS_TOKEN, this.tokens.accessToken);
   }
 
+  setStorageType(storeType: string) {
+    if (!storeType) return;
+    this.storage = storeType === "sessionStorage" ? sessionStorage : localStorage;
+    this.localStorage.setItem(LOCAL_STORAGE_STORAGE_TYPE, storeType);
+  }
+
   getCode(): TToken {
     return this.locationParams[LOCATION_CODE_PARAM] || "";
   }
@@ -212,6 +226,11 @@ class DatawizAuth {
 
   getAccessTokenFromLocation(): string {
     return this.storage.getItem(LOCAL_STORAGE_ACCESS_TOKEN) || "";
+  }
+
+  getStorageTypeFromLocalStorage(): Storage {
+    const storageType = this.localStorage.getItem(LOCAL_STORAGE_STORAGE_TYPE);
+    return storageType === "sessionStorage" ? sessionStorage : localStorage;
   }
 
   onTokenExpired() {}
